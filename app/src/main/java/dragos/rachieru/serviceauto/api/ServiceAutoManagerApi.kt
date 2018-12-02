@@ -1,8 +1,10 @@
 package dragos.rachieru.serviceauto.api
 
 import dragos.rachieru.serviceauto.entities.IssueRequest
+import dragos.rachieru.serviceauto.entities.LoginBody
+import io.reactivex.Completable
 import io.reactivex.Single
-import retrofit2.http.GET
+import retrofit2.http.*
 
 /**
  * ServiceAuto by Imbecile Games
@@ -11,6 +13,15 @@ import retrofit2.http.GET
  * @author Dragos
  */
 interface ServiceAutoManagerApi {
+
+    @POST("login")
+    fun login(@Body body: LoginBody): Single<Boolean>
+
     @GET("requests")
-    fun getRequest(): Single<MutableList<IssueRequest>>
+    fun getRequests(@Query("status") status: String? = null): Single<MutableList<IssueRequest>>
+
+    @PUT("requests/{requestId}")
+    fun setStatus(@Path("requestId") id: String,
+                  @Body statusBody: IssueRequest
+    ): Completable
 }

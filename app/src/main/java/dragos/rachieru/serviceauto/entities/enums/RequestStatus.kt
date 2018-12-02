@@ -1,6 +1,8 @@
 package dragos.rachieru.serviceauto.entities.enums
 
-import com.squareup.moshi.Json
+import androidx.annotation.StringRes
+import com.google.gson.annotations.SerializedName
+import dragos.rachieru.serviceauto.R
 
 /**
  * ServiceAuto by Imbecile Games
@@ -8,13 +10,13 @@ import com.squareup.moshi.Json
  * @since 02.12.2018
  * @author Dragos
  */
-enum class RequestStatus {
-    @Json(name = "pending")
-    PENDING,
-    @Json(name = "ongoing")
-    ONGOING,
-    @Json(name = "completed")
-    COMPLETED,
-    @Json(name = "revoked")
-    REVOKED
+enum class RequestStatus(@StringRes val stringId: Int) {
+    @SerializedName("pending")
+    PENDING(R.string.pending),
+    @SerializedName("ongoing")
+    ONGOING(R.string.ongoing),
+    @SerializedName("completed")
+    COMPLETED(R.string.completed),
+    @SerializedName("revoked")
+    REVOKED(R.string.revoked)
 }

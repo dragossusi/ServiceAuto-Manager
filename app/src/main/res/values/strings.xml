@@ -10,4 +10,10 @@
     <string name="complete_all_fields">Complete all fields</string>
     <string name="bad_email">Bad email</string>
     <string name="short_password">Password too short</string>
+    <string name="bad_credentials">Bad email or password</string>
+    <string name="error_occured">An error has occured</string>
+    <string name="pending">Pending</string>
+    <string name="ongoing">Ongoing</string>
+    <string name="completed">Completed</string>
+    <string name="revoked">Revoked</string>
 </resources>

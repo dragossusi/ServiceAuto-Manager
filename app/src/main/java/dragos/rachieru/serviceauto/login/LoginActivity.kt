@@ -1,12 +1,14 @@
 package dragos.rachieru.serviceauto.login
 
+import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import dragos.rachieru.serviceauto.BaseActivity
 import dragos.rachieru.serviceauto.R
+import dragos.rachieru.serviceauto.extensions.isLoggedIn
+import dragos.rachieru.serviceauto.main.MainActivity
 import kotlinx.android.synthetic.main.activity_login.*
 
 /**
@@ -16,15 +18,15 @@ import kotlinx.android.synthetic.main.activity_login.*
  * @author Dragos
  */
 
-class LoginActivity : AppCompatActivity(), View.OnClickListener {
+class LoginActivity : BaseActivity(), View.OnClickListener {
 
     lateinit var presenter: LoginPresenter
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         btn_login.setOnClickListener(this)
-        presenter = LoginPresenter(this)
+        presenter = LoginPresenter(this, api)
     }
 
     override fun onClick(p0: View) {
@@ -39,4 +41,27 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         else presenter.login(email, password)
     }
 
+    override fun onPause() {
+        super.onPause()
+        presenter.dispose()
+        hideProgress()
+    }
+
+    fun onLoggedIn(t: Boolean) {
+        if (t) {
+            isLoggedIn = t
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        } else {
+            Toast.makeText(this, R.string.bad_credentials, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun showProgress() {
+        progress_bar.visibility = View.VISIBLE
+    }
+
+    override fun hideProgress() {
+        progress_bar.visibility = View.GONE
+    }
 }
